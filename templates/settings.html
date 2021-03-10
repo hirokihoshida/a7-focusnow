@@ -1,0 +1,47 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col s10 offset-s1">
+        <div class="card">
+            <div class="card-content">
+                <form id="settings-form" onsubmit="saveTiming()">
+                    <div class="row">
+                        <div class="input-field col s10 offset-s1">
+                            <script>
+                                document.write("<input value=" + localStorage.getItem("focusTime") / 60 + " id='focusTime' name='focusTime' type='number' min='10' max='59' class='validate' required>");
+                            </script>
+                            <label for="focusTime">Focus Time (Minutes)</label>
+                        </div>
+                        <div class="input-field col s5 offset-s1">
+                            <script>
+                                document.write("<input value=" + localStorage.getItem("breakShortTime") / 60 + " id='breakShortTime' name='breakShortTime' type='number' min='1' max='20' class='validate' required>");
+                            </script>
+                            <label for="breakShortTime">Short Break (Minutes)</label>
+                        </div>
+                        <div class="input-field col s5">
+                            <script>
+                                document.write("<input value=" + localStorage.getItem("breakLongTime") / 60 + " id='breakLongTime' name='breakLongTime' type='number' min='1' max='59' class='validate' required>");
+                            </script>
+                            <label for="breakLongTime">Long Break (Minutes)</label>
+                        </div>
+                        <div class="col s5 offset-s1">
+                            <a class="btn-large waves-effect waves-light red timer-btn" onclick="resetTiming()">Reset
+                                <i class="material-icons left">delete</i>
+                            </a>
+                        </div>
+                        <div class="col s5">
+                            <button class="btn-large waves-effect waves-light green timer-btn" type="submit"
+                                name="action">Save
+                                <i class="material-icons left">save</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

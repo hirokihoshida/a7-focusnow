@@ -1,0 +1,131 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<div class="row">
+    <!-- TIMER -->
+    <div class="col s10 offset-s1">
+        <div class="card">
+            <div class="card-content">
+                <div class="row timer">
+                    <div class="col s12">
+                        <div class="card-panel green">
+                            <h4 class="white-text" id="info-banner">Focus</h4>
+                        </div>
+                    </div>
+                    <div class="col s10 offset-s1">
+                        <h1 id="time">15:00</h1>
+                    </div>
+                    <div class="col s10 offset-s1">
+                        <a class="waves-effect waves-light timer-btn btn-large green" onclick="buttonClicked()"
+                            id="start-stop-btn">Start Focus</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MENU -->
+    <div class="col s10 offset-s1 l2 offset-l2">
+        <a class="waves-effect waves-light menu-btn btn-large green modal-trigger" href="#create-task-modal"><i
+                class="material-icons left">add</i>Create Task</a>
+    </div>
+    <div class="col s10 offset-s1 l2">
+        <a class="waves-effect waves-light menu-btn btn-large green" href="{{ url_for('schedule') }}"><i
+                class="material-icons left">event</i>Schedule</a>
+    </div>
+    <!-- <div class="col s10 offset-s1 l2">
+        <a class="waves-effect waves-light menu-btn btn-large green" href="{{ url_for('activity') }}"><i
+                class="material-icons left">insert_chart</i>History</a>
+    </div> -->
+    <div class="col s10 offset-s1 l2">
+        <a class="waves-effect waves-light menu-btn btn-large green" href="{{ url_for('settings') }}"><i
+                class="material-icons left">settings</i>Settings</a>
+    </div>
+    <!-- <div class="col s10 offset-s1 l2">
+        <a class="waves-effect waves-light menu-btn btn-large green" href="{{ url_for('help') }}"><i
+                class="material-icons left">help_outline</i>Help</a>
+    </div> -->
+    <div class="col s10 offset-s1 l2">
+        <a class="waves-effect waves-light menu-btn btn-large green modal-trigger" href="#help-modal"><i
+                class="material-icons left">help_outline</i>Help</a>
+    </div>
+</div>
+
+<!-- CREATE TASK MODAL -->
+<div id="create-task-modal" class="modal bottom-sheet">
+    <div class="modal-content">
+        <h4 style="text-align: center;">Create a Task</h4>
+        <form id="addTaskForm" onsubmit="addTask()">
+            <div class="row">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="Study for math test" name="taskName" id="taskName" type="text"
+                            class="validate" required>
+                        <label for="taskName">Task Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input value=60 name="minutes" id="minutes" type="number" class="validate" required>
+                        <label for="minutes">Time Needed (minutes)</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select name="priority" id="priority">
+                            <option value=1 selected>Low</option>
+                            <option value=2>Medium</option>
+                            <option value=3>High</option>
+                        </select>
+                        <label for="priority">Priority</label>
+                    </div>
+                    <div class="col s12">
+                        <button class="btn-large waves-effect waves-light green timer-btn" type="submit"
+                            name="action">Add Task
+                            <i class="material-icons left">add</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- HELP MODAL -->
+<div id="help-modal" class="modal bottom-sheet">
+    <div class="modal-content">
+        <h5 style="text-align: center;">Help</h5>
+        <hr>
+        <span>  Focus Now’s goal is to provide a place for users to easily manage their work
+            with a customizable
+            timer. The intention of this app is to help users maintain a balance between
+            their focus and break time
+            in order to avoid constant distractions while they study, code, etc.
+            The goal of Focus Now is to help students excel in time management with an alternative time management
+            method.
+        </span>
+        <br>
+        <span>
+                By splitting your time into 30 minute cycles of 25 minutes of focus and 5 minutes of break, you can maintain
+            a good balance between your time. Study sessions don't feel like they drag on endlessly, and you have
+            something to break you out of a sluggish break.
+        </span>
+        <br>
+        <span>
+                Focus Now provides a scheduling function where you can log tasks you need to accomplish and the approximate
+            time each task would take. Focus Now then automatically splits the times into the cycles so you can
+            productively get your work done.
+        </span>
+        <hr>
+        <h6>Instructions</h6>
+        <ol>
+            <li>Use the Create Task button to add a new task, along with the approximate time it would take as well as
+                its priority.</li>
+            <li>These tasks are automatically sorted by priority and added to the Schedule tab.</li>
+            <li>Click the schedule tab to see added tasks, as well as edit and delete them as needed.</li>
+            <li>Start the timer. The timer is automatically made to cycle through focus and breaks.</li>
+        </ol>
+        <hr>
+        <span>
+            By default, Focus Now cycles are split into 25 minute focus sessions, 5 minute short break sessions (breaks
+            while completing a task), and 10 minute long break sessions (breaks between tasks). If you feel you would
+            like to adjust these timings, go to the Settings page and change the values as you would like.
+        </span>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-content black-text">
+        <h5 class="chart" style="text-align: center;">Schedule</h5>
+        <ul class="collection">
+            <script>
+                var tasks = JSON.parse(localStorage.getItem("tasks"));
+                if (tasks['tasks'].length == 0) {
+                    document.write("<h5 style='text-align: center;'>You currently have no tasks!</h5>")
+                }
+                else {
+                    $.each(tasks["tasks"], function (i, item) {
+                        document.write("<li class='collection-item " + item['taskID'] + "'>");
+                        document.write("<span class='title'>" + item['taskName'] + "<br>" + item['minutes'] + " minutes left</span>")
+                        document.write("<a href='#" + item['taskID'] + "-modal' class='secondary-content green-text modal-trigger'>Edit</a>");
+                        document.write("</li>");
+                    });
+                }
+            </script>
+        </ul>
+    </div>
+</div>
+
+<!-- Modal for each task -->
+<!-- All relevant items to task (collection, modal) have class=taskID. modal has id=taskID-modal form within modal has id=taskID-form -->
+<script>
+    var tasks = JSON.parse(localStorage.getItem("tasks"));
+    $.each(tasks["tasks"], function (i, item) {
+        // Modal Header
+        document.write("<div id='" + item['taskID'] + "-modal' class='modal bottom-sheet edit-task-modal " + item['taskID'] + "'>");
+        document.write("<div class='modal-content'>");
+        document.write("<h4 style='text-align: center;''>Edit Task</h4>");
+        document.write("<form id='" + item['taskID'] + "-form' onsubmit='editTask(" + item['taskID'] + ")'>");
+        document.write("<div class='row'>");
+        // Task Name
+        document.write("<div class='input-field col s12'>");
+        document.write("<input value='" + item["taskName"] + "' name='taskName'  type='text' class='validate' required>");
+        document.write("<label for='taskName'>Task Name</label>")
+        document.write("</div>")
+        // Task Minutes
+        document.write("<div class='input-field col s6'>");
+        document.write("<input value=" + item['minutes'] + " name='minutes'  type='number' class='validate' required>");
+        document.write("<label for='minutes'>Time Needed (minutes)</label>");
+        document.write("</div>");
+        // Task Priority
+        document.write("<div class='input-field col s6'>");
+        document.write("<select name='priority' >");
+        if (item['priority'] == '1') {
+            document.write("<option value=1 selected>Low</option>");
+            document.write("<option value=2 >Medium</option>");
+            document.write("<option value=3 >High</option>");
+        }
+        else if (item['priority'] == '2') {
+            document.write("<option value=1 >Low</option>");
+            document.write("<option value=2 selected>Medium</option>");
+            document.write("<option value=3 >High</option>");
+        }
+        else {
+            document.write("<option value=1>Low</option>");
+            document.write("<option value=2>Medium</option>");
+            document.write("<option value=3 selected>High</option>");
+        }
+        document.write("<label for='priority'>Priority</label>");
+        document.write("</select>");
+        document.write("</div>");
+        // Edit Task Button
+        document.write("<div class='col s12'>");
+        document.write("<button class='btn-large waves-effect waves-light green menu-btn modal-close' type='submit'>Edit Task<i class='material-icons left'>edit</i></button>");
+        document.write("</div>")
+        // Delete Task Button
+        document.write("<div class='col s12'>");
+        document.write("<button class='btn-large waves-effect waves-light red menu-btn modal-close' onClick=deleteTask(" + item['taskID'] + ")>Delete Task<i class='material-icons left'>clear</i></button>");
+        document.write("</div>");
+
+        document.write("</div>");
+        document.write("</form>");
+        document.write("</div>");
+        document.write("</div>");
+    });
+</script>
+
+{% endblock %}
